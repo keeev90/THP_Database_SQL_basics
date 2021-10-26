@@ -1,0 +1,70 @@
+----- 1. CREATION DES TABLES -----
+
+CREATE TABLE `User` (
+  `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+  `Username` TEXT
+);
+
+CREATE TABLE `Article` (
+  `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+  `Title` TEXT,
+  `User_id` INTEGER,
+  FOREIGN KEY (`User_id`) REFERENCES `User`(`id`)
+);
+
+CREATE TABLE `Category` (
+  `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+  `Title` TEXT
+);
+
+CREATE TABLE `Tag` (
+  `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+  `Title` TEXT,
+  `Color` TEXT
+);
+
+CREATE TABLE `Link_articles_categories` (
+  `Article_id` INTEGER, 
+  `Category_id` INTEGER,
+  FOREIGN KEY (`Article_id`) REFERENCES `Article`(`id`),
+  FOREIGN KEY (`Category_id`) REFERENCES `Category`(`id`)
+);
+
+CREATE TABLE `Link_categories_tags` (
+  `Category_id` INTEGER,
+  `Tag_id` INTEGER,
+  FOREIGN KEY (`Category_id`) REFERENCES `Category`(`id`),
+  FOREIGN KEY (`Tag_id`) REFERENCES `Tag`(`id`)
+);
+
+----- 2. CREATION DES ENTREES POUR CHAQUE TABLE -----
+
+INSERT INTO User (Username) VALUES ('Pierre');
+INSERT INTO User (Username) VALUES ('Paul');
+INSERT INTO User (Username) VALUES ('Jacques');
+
+INSERT INTO Article (Title, User_id) VALUES ('Article n°1 de Pierre', 1);
+INSERT INTO Article (Title, User_id) VALUES ('Article de Paul', 2);
+INSERT INTO Article (Title, User_id) VALUES ('Article n°2 de Pierre', 1);
+
+INSERT INTO Category (Title) VALUES ('Categorie A');
+INSERT INTO Category (Title) VALUES ('Categorie B');
+INSERT INTO Category (Title) VALUES ('Categorie C');
+
+INSERT INTO Tag (Title, Color) VALUES ('Tag X', 'Bleu');
+INSERT INTO Tag (Title, Color) VALUES ('Tag Y', 'Rouge');
+INSERT INTO Tag (Title, Color) VALUES ('Tag Z', 'Noir');
+
+INSERT INTO Link_articles_categories (Article_id, Category_id) VALUES (1, 1);
+INSERT INTO Link_articles_categories (Article_id, Category_id) VALUES (2, 1);
+INSERT INTO Link_articles_categories (Article_id, Category_id) VALUES (2, 2);
+INSERT INTO Link_articles_categories (Article_id, Category_id) VALUES (3, 1);
+INSERT INTO Link_articles_categories (Article_id, Category_id) VALUES (3, 2);
+INSERT INTO Link_articles_categories (Article_id, Category_id) VALUES (3, 3);
+
+INSERT INTO Link_categories_tags (Category_id, Tag_id) VALUES (1, 1);
+INSERT INTO Link_categories_tags (Category_id, Tag_id) VALUES (1, 2);
+INSERT INTO Link_categories_tags (Category_id, Tag_id) VALUES (2, 1);
+INSERT INTO Link_categories_tags (Category_id, Tag_id) VALUES (3, 2);
+INSERT INTO Link_categories_tags (Category_id, Tag_id) VALUES (3, 3);
+
